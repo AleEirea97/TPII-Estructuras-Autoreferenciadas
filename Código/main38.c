@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define REGBIT(byte,bit) ((volatile fbit_t*)&byte)->b##bit
+
 typedef struct{
 	unsigned char b0:1;
 	unsigned char b1:1;
@@ -32,6 +34,54 @@ int opc(void){
 	return op;
 }
 
+fbit_t upload(fbit_t a){
+	int b;
+	for(int i = 0; i < 8; i++){
+		switch(i){
+			case 0:
+				printf("Sensando...");
+				scanf("%d",&b);
+				REGBIT(a,7) = b;
+			break;
+			case 1:
+				printf("Sensando...");
+				scanf("%d",&b);
+				REGBIT(a,6) = b;
+			break;
+			case 2:
+				printf("Sensando...");
+				scanf("%d",&b);
+				REGBIT(a,5) = b;
+			break;
+			case 3:
+				printf("Sensando...");
+				scanf("%d",&b);
+				REGBIT(a,4) = b;
+			break;
+			case 4:
+				printf("Sensando...");
+				scanf("%d",&b);
+				REGBIT(a,3) = b;
+			break;
+			case 5:
+				printf("Sensando...");
+				scanf("%d",&b);
+				REGBIT(a,2) = b;
+			break;
+			case 6:
+				printf("Sensando...");
+				scanf("%d",&b);
+				REGBIT(a,1) = b;
+			break;
+			case 7:
+				printf("Sensando...");
+				scanf("%d",&b);
+				REGBIT(a,0) = b;
+			break;
+		}
+	}
+	return a;
+}
 
 int main (void){
 
@@ -46,8 +96,8 @@ int main (void){
 				aux = (cola_t *)malloc(sizeof(cola_t));
 				if(aux)					//Si aux no es NULL
 				{
-					printf("\n Muestra:");
-					scanf("%d",&aux->muestra);
+					printf("\n Muestra:\n");
+					aux->muestra = upload(aux->muestra);
 
 					if(p == NULL)		//Tratamiento especial al ser el primer elemento.
 						p=u=aux;
