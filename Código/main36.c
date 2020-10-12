@@ -4,17 +4,17 @@
 #include <windows.h>
 
 typedef struct{
- char apellido[15];
- char nombre[15];
- int edad;
- long tel;
- char mail[30];
+	char apellido[15];
+ 	char nombre[15];
+ 	int edad;
+ 	long tel;
+ 	char mail[30];
 }datos_t;
 
-typedef struct{
- datos_t info;
- void *lazo;
-}lista_t;
+struct lista{
+	datos_t info;
+ 	struct lista *lazo;
+};
 
 void menu (void){
 	system("cls");
@@ -35,7 +35,7 @@ int opc(void){
 int main (void){
 
 	FILE *file_p;
-	lista_t *p=NULL, *u= NULL, *aux, *r;
+	struct lista *p=NULL, *u= NULL, *aux, *r;
 	datos_t a;
 
 	while(1)
@@ -51,11 +51,11 @@ int main (void){
 				fread(&a,sizeof(datos_t),1,file_p);
 				while(!feof(file_p))
 				{
-				 	aux = (lista_t*)malloc(sizeof(lista_t));
+				 	aux = (struct lista*)malloc(sizeof(struct lista));
 
 					aux->info = a;
 
-					if(p == NULL) // Si esta vacía..es el primer elemento.
+					if(p == NULL) // Si esta vacia..es el primer elemento.
 					{
 						p = u = aux;
 						u->lazo = NULL;
@@ -69,6 +69,7 @@ int main (void){
 						{
 							if( strcmp(aux->info.apellido,r->info.apellido) == -1 )
 							{
+								printf("%s",aux->info.apellido );
 								printf("\nPrimer lugar.\n");
 								Sleep(1000);
 								aux->lazo = p;	//Rutina de la pila.
@@ -77,13 +78,16 @@ int main (void){
 							}
 							while(r->lazo)		//Ciclo para elemento interno.
 							{
-								if( strcmp( r->lazo->info.apellido, aux->info.apellido) == -1 )//Error de compilación acá.
-									r = (lista_t *)r->lazo;
+								if( strcmp( r->lazo->info.apellido, aux->info.apellido) == -1 )	{
+
+									printf("%s",aux->info.apellido );
+									r = r->lazo;}
 								else
 									break;
 							}
 							if(r == u)
 							{
+								printf("%s",aux->info.apellido );
 								printf("\nUltimo lugar.\n");	//Rutina de la cola.
 								Sleep(1000);
 								u->lazo = aux;
@@ -91,6 +95,7 @@ int main (void){
 								u->lazo= NULL;
 								break;
 							}
+							printf("%s",aux->info.apellido );
 							printf("\nOtro lugar.\n");
 							Sleep(1000);
 							aux->lazo = r->lazo;
@@ -115,7 +120,7 @@ int main (void){
 					printf("\nTelefono: %ld", aux->info.tel);
 					printf("\nE-Mail: %s", aux->info.mail);
 
-					aux =(lista_t *)aux->lazo;
+					aux = aux->lazo;
 				}
 				system("pause");
 			break;
