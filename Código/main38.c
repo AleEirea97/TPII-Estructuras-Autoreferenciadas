@@ -24,13 +24,14 @@ int opc(void){
 int main (void){
 
 	cola_t *p = NULL, *u = NULL, *aux;
-
+	int muestra[8] = {0,64,81,90,97,110,119,127};
+	
 	while(1){
 		menu();
 		switch(opc()){
 
 			case 1:
-			
+
 					for(int i = 0; i < 8; i ++)
 					{
 						printf("\n Muestreando...");
