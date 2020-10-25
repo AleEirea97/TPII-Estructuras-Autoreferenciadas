@@ -62,7 +62,24 @@ __EJERCICIO 37__:
    Realizar una función que pase como parámetro la clave, entre otros parámetros, y apile dos valores, la Clave y su posición física respecto
    al archivo (registro 1, 2, etc), si es que el campo tipo tiene el bit 4 con valor 1. En caso de no encontrarlo mostrar por pantalla "Registro no encontrado".
    La función debe devolver el puntero de pila.
-   Realizar el main con varias llamadas a dicha función y proceder a mostrar las descripciones del archivo, mediante la pila como acceso directo. _NO USAR VARIABLES GLOBALES__
+   Realizar el main con varias llamadas a dicha función y proceder a mostrar las descripciones del archivo, mediante la pila como acceso directo. NO USAR VARIABLES GLOBALES
 </p>
 
-El código del ejercicio 37 NO está terminado.
+__EJERCICIO 41:__
+<p align ="justify">
+El depósito de la empresa CosmeFulanito necesita cargar su stock de repuestos en forma ordenada. Para dicha tarea se solicitó categorizar a los respuestos bajo la siguiente estructura de datos:</p>
+
+```c
+typedef struct{
+   long partNumber;
+   long serialNumber;
+   char descripcion[40];       
+   char ubicacion[100];        
+}repuestos_t;
+
+```
+<p align ="justify">
+Los repuestos no están ordenados, se solicita cargarlos en una lista, la cual ordene por descripción a los repuestos para luego guardarlos en un archivo de stock con organización secuencial.</p>
+
++ Imprimir en pantalla la lista con cada inserción.
++ El archivo se generará cuando el usuario decide no cargar mas productos.
