@@ -12,8 +12,6 @@ __EJERCICIO 38:__
 Hacer una cola con los valores muestreados de un cuarto de ciclo de una señal sinusoidal, en 8 bits, para luego recorrerla y recomponer la señal completa. Las muestras deberán ir de 127 a -127 utilizando el bit más significativo en 1 para los valores negativos y en 0 para los valores positivos. Imprimir en pantalla los valores.
 </p>
 
-El código del ejercicio 38 NO está terminado.
-
 __EJERCICIO 36:__
 
 <p align ="justify">
@@ -29,7 +27,7 @@ Hacer un programa que tome los datos de medición de potencia, cargados por el u
 
 Los datos que cargará el usuario tienen la siguiente estructura:
 
-```
+```c
 char desc[60];
 unsigned char potencia;
 unsigned int estado;
@@ -45,3 +43,26 @@ Utilizando el archivo “potencia.dat” creado en el Ejercicio 39, realizar una
 <p align ="justify">
 La función ubicará el registro correspondiente al id pasado como parámetro, y utilizando punteros imprimirá la primera palabra del campo "desc" en forma inversa, además cambiará el estado del bit 3 para luego actualizar el archivo. Además, se agregará a una pila la potencia cuando los bits 0 y 2, del campo estado, estén encendidos, en caso contrario se agregará el registro al archivo “salida.dat” de organización secuencial.
 </p>
+
+__EJERCICIO 37__:
+
+   Existe un archivo llamado "datos.dat", de tipo binario, cuya organización es secuencial. Los datos están organizados según la siguiente estructura:   
+
+   ```c
+   struct d{                                                                                            
+   long clave; //Clave o Id del registro
+
+   char d[30]; // Descripcion                                                                                          
+   unsigned char tipo; //Tipo de datos como entero sin signo                                                                                                                                            
+   char b; //'A':Alta 'B':Baja                                                                                                                                                                          
+   }
+   ```
+<p align ="justify">
+   Se Pide:
+   Realizar una función que pase como parámetro la clave, entre otros parámetros, y apile dos valores, la Clave y su posición física respecto
+   al archivo (registro 1, 2, etc), si es que el campo tipo tiene el bit 4 con valor 1. En caso de no encontrarlo mostrar por pantalla "Registro no encontrado".
+   La función debe devolver el puntero de pila.
+   Realizar el main con varias llamadas a dicha función y proceder a mostrar las descripciones del archivo, mediante la pila como acceso directo. _NO USAR VARIABLES GLOBALES__
+</p>
+
+El código del ejercicio 37 NO está terminado.
