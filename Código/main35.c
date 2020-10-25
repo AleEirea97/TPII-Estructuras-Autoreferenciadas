@@ -2,8 +2,7 @@
 #include <stdlib.h>
 
 typedef struct{
-	char nombre[15];
-	char apellido[15];
+	char nombre_apellido[30];
 	int edad;
 	long tel;
 	char mail[30];
@@ -49,11 +48,8 @@ int main (void){
 
 				aux = (pila_t *)malloc(sizeof(pila_t));
 
-				printf("Ingrese su nombre:");
-				gets(aux->info.nombre);
-
-				printf("Ingrese su apellido:");
-				gets(aux->info.apellido);
+				printf("Ingrese su nombre y apellido:");
+				gets(aux->info.nombre_apellido);
 
 				fflush(stdin);
 
@@ -89,8 +85,7 @@ int main (void){
 
 					if (aux->info.edad > 21)
 					{
-						printf("\nApellido: %s",aux->info.apellido);
-						printf("\nNombre: %s", aux->info.nombre);
+				 		printf("\nNombre y Apellido: %s", aux->info.nombre_apellido);
 						printf("\nEdad: %d",aux->info.edad);
 						printf("\nTelefono: %ld", aux->info.tel);
 						printf("\nE-Mail: %s", aux->info.mail);
@@ -112,8 +107,7 @@ int main (void){
 				fread(&info_A,sizeof(datos_t),1,file_p);
 
 				while(!feof(file_p)){
-					printf("\nApellido: %s",info_A.apellido);
-					printf("\nNombre: %s", info_A.nombre);
+					printf("\nNombre y Apellido: %s", info_A.nombre_apellido);
 					printf("\nEdad: %d", info_A.edad);
 					printf("\nTelefono: %ld", info_A.tel);
 					printf("\nE-Mail: %s", info_A.mail);
