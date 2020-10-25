@@ -49,11 +49,11 @@ int main (void){
 
 				aux = (pila_t *)malloc(sizeof(pila_t));
 
-				printf("Ingrese su apellido:");
-				gets(aux->info.apellido);
-
 				printf("Ingrese su nombre:");
 				gets(aux->info.nombre);
+
+				printf("Ingrese su apellido:");
+				gets(aux->info.apellido);
 
 				fflush(stdin);
 
@@ -82,13 +82,21 @@ int main (void){
 
 				aux = p;
 
-				while(1){
+				while(1)
+				{
 					if(!aux)
 						break;
 
 					if (aux->info.edad > 21)
-						fwrite(&aux->info,sizeof(datos_t),1,file_p);
+					{
+						printf("\nApellido: %s",aux->info.apellido);
+						printf("\nNombre: %s", aux->info.nombre);
+						printf("\nEdad: %d",aux->info.edad);
+						printf("\nTelefono: %ld", aux->info.tel);
+						printf("\nE-Mail: %s", aux->info.mail);
 
+						fwrite(&aux->info,sizeof(datos_t),1,file_p);
+					}
 					aux = (pila_t *)aux->lazo;
 				}
 				fclose(file_p);
@@ -120,6 +128,10 @@ int main (void){
 
 			case 4:
 				return 0;
+
+			case 5://Borra el contenido del archivo al pisarlo con uno nuevo.
+				file_p = fopen("contactos.dat", "wb");
+			break;
 		}
 	}
 
