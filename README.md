@@ -30,6 +30,8 @@ __EJERCICIO 37__:
    La función debe devolver el puntero de pila.
    Realizar el main con varias llamadas a dicha función y proceder a mostrar las descripciones del archivo, mediante la pila como acceso directo. NO USAR VARIABLES GLOBALES</p>
 
+   __SE AÑADE UNA CARPETA CON EL ARCHIVO BINARIO datos.dat PARA QUE EL main37.c FUNCIONE CORRECTAMENTE.__
+
 __EJERCICIO 38:__
 
 <p align ="justify">
@@ -95,3 +97,37 @@ Los repuestos no están ordenados, se solicita cargarlos en una lista, la cual o
 
 + Imprimir en pantalla la lista con cada inserción.
 + El archivo se generará cuando el usuario decide no cargar mas productos.
+
+__EJERCICIO 43:__
+<p align ="justify">
+El servicio técnico de CosmeFulanito recibe órdenes de trabajo diarias. Las mismas son cargadas en un archivo secuencial por el personal de recepción bajo la siguiente estructura de datos:</p>
+
+```c
+typedef struct{
+   long numeroDeOrden;
+   char cliente[40];       
+   char descripciondeFalla[200];        
+   char modelo[65];
+   char fecha[10];
+   char hora[10];
+}repuestos_t;
+
+```
+
+Se pide:
++ Hacer una pila con las órdenes de trabajo de forma tal que la más vieja sea la última en cargarse.
+
+__SE AÑADE UNA CARPETA CON EL ARCHIVO BINARIO ordenes.dat PARA QUE EL main43.c FUNCIONE CORRECTAMENTE. ESTE A SU VEZ CREARÁ UN ARCHIVO QUE SERÁ NECESARIO PARA QUE EL main44.c FUNCIONE CORRECTAMENTE.__
+
+__EJERCICIO 44:__
+<p align ="justify">
+El servicio técnico utiliza la pila generada en el ejercicio 43 en su labor diaria. Cada técnico toma una tarea de la pila y genera un orden de extracción de repuestos al depósito. Para optimizar los viajes al depósito se arma una lista con los repuestos que cada orden necesita utilizando la siguiente estructura:</p>
+
+```c
+typedef struct{
+    repuestos_t repuesto;        
+    int cantidad;
+}extraccionRepuestos_t;
+```
+<p align ="justify">
+Se pide cargar la lista de repuestos solicitados por los técnicos. Tener en cuenta que varios técnicos pueden necesitar la misma parte, y en esos casos se debe incrementar la cantidad pedida en la lista.</p>
