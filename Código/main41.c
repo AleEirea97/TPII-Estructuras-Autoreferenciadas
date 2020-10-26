@@ -7,6 +7,7 @@ typedef struct{
    long serialNumber;
    char descripcion[40];
    char ubicacion[100];
+   int cantidad;
 }repuestos_t;
 
 struct lista{
@@ -53,7 +54,9 @@ int main(void)
 				gets(aux->repuesto.descripcion);
 				printf("\nIngrese Ubicacion:");
 				gets(aux->repuesto.ubicacion);
-
+				fflush(stdin);
+				printf("\nIngrese la cantidad:");
+				scanf("%d",&aux->repuesto.cantidad);
 
 				if(p == NULL) // Si esta vacía..es el primer elemento.
 				{
@@ -94,10 +97,11 @@ int main(void)
 				//Imprimir la lista:
 				aux = p;
 				printf("\nLista Actual:");
-				printf("\nPartNumber\tSerialNumber\tDescripcion:\tUbicacion:\n");
+				printf("\nPartNumber\tSerialNumber\tDescripcion:\t\tUbicacion:\tCantidad\n");
 				while(aux)
 				{
-					printf("%04ld\t\t%04ld\t\t%-10s\t%-10s\n",aux->repuesto.partNumber,aux->repuesto.serialNumber,aux->repuesto.descripcion,aux->repuesto.ubicacion);
+					printf("%04ld\t\t%04ld\t\t%-10s\t%-10s\t%04d\n",aux->repuesto.partNumber,aux->repuesto.serialNumber,
+						aux->repuesto.descripcion,aux->repuesto.ubicacion,aux->repuesto.cantidad);
 					aux = aux->lazo;
 				}
 				system("pause");
@@ -115,6 +119,7 @@ int main(void)
 					aux = aux->lazo;
 				}
 				fclose(file_p);
+				printf("Stock creado con exito.\n");
 				system("pause");
 
 				break;
@@ -127,10 +132,12 @@ int main(void)
 				file_p = fopen("stock.dat","rb");
 
 				fread(&repuestoA,sizeof(repuestos_t),1,file_p);
-				printf("PartNumber\tSerialNumber\tDescripcion:\tUbicacion:\n");
+				printf("\nPartNumber\tSerialNumber\tDescripcion:\t\tUbicacion:\tCantidad:\n");
 				while(!feof(file_p))
 				{
-					printf("%04ld\t\t%04ld\t\t%-10s\t%-10s\n",repuestoA.partNumber,repuestoA.serialNumber,repuestoA.descripcion,repuestoA.ubicacion);
+					printf("%04ld\t\t%04ld\t\t%-10s\t\t%-10s\t%04d\n",repuestoA.partNumber,repuestoA.serialNumber,
+						repuestoA.descripcion,repuestoA.ubicacion,repuestoA.cantidad);
+
 					fread(&repuestoA,sizeof(repuestos_t),1,file_p);
 				}
 				fclose(file_p);

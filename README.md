@@ -78,6 +78,18 @@ Los repuestos no están ordenados, se solicita cargarlos en una lista, la cual o
 + Imprimir en pantalla la lista con cada inserción.
 + El archivo se generará cuando el usuario decide no cargar mas productos.
 
+__SE AÑADE UNA CARPETA CON EL ARCHIVO BINARIO stock.dat QUE ES USADO PARA EL main45.c__
+
+__EJERCICIO 42:__
+<p align ="justify">
+El proveedor de repuestos de CosmeFulanito informó que una partida de repuestos salió con falla y debe ser devuelta. Para identificar la partida, el proveedor indicó que la falla fue en el partNumber: 1234 que tiene números de serie con el bit 3 y 5 en 1.</p>
+
+Para estas tareas se solicita:
+
++ Hacer una cola con todos los registros fallados
++ Realizar la baja física a todos los repuestos fallados
++ Crear un archivo donde se vuelque el contenido de la cola en orden inverso.
+
 __EJERCICIO 43:__
 <p align ="justify">
 El servicio técnico de CosmeFulanito recibe órdenes de trabajo diarias. Las mismas son cargadas en un archivo secuencial por el personal de recepción bajo la siguiente estructura de datos:</p>
@@ -111,3 +123,10 @@ typedef struct{
 ```
 <p align ="justify">
 Se pide cargar la lista de repuestos solicitados por los técnicos. Tener en cuenta que varios técnicos pueden necesitar la misma parte, y en esos casos se debe incrementar la cantidad pedida en la lista.</p>
+
+__EJERCICIO 45:__
+<p align ="justify">
+La lista creada en el ejercicio 44 es procesada por el depósito. Para dicha tarea se pide hacer un programa que:</p>
+
++ Descuente las cantidades solicitadas del archivo de stock, creado en el Ejercicio 41.
++ Hacer una cola con los repuestos en los que no se encontró stock suficiente para poder notificar a los clientes la demora de la reparación.

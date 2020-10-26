@@ -2,63 +2,112 @@
 #include <stdlib.h>
 
 typedef struct{
-   long partNumber;
-   long serialNumber;
-   char descripcion[40];
-   char ubicacion[100];
+   long numeroDeOrden;
+   char cliente[40];
+   char descripciondeFalla[200];
+   char modelo[65];
+   char fecha[10];
+   char hora[10];
 }repuestos_t;
 
 typedef struct{
-    repuestos_t rep_fallados;
-    void *lazo;
-}cola_t;
+    repuestos_t repuesto;
+    int cantidad;
+}extraccionRepuestos_t;
+
+struct lista{
+	extraccionRepuestos_t extraccionL;
+	struct lista *lazo;
+};
 
 int main (void)
 {
 	FILE *file_p;
-	cola_t *p = NULL, *u = NULL, *aux;
-	long partNumberb;
-	repuestos_t repuestoA;
+	struct lista *p = NULL, *u = NULL, *aux, *r;
+	repuestos_t orden;
+	extraccionRepuestos_t extraccion;
 
-	partNumberb = 1234;	//Dado por el problema.
-	file_p = fopen("stock.dat","rb");
+	file_p = fopen("ordenesPila.dat","rb");
+	fread(&orden, sizeof(repuestos_t),1,file_p);
 
-	fread(&repuestoA,sizeof(repuestos_t),1,file_p);
-	//printf("PartNumber\tSerialNumber\tDescripcion:\tUbicacion:\n");
 	while(!feof(file_p))
 	{
-		if(repuestoA.partNumber == partNumberb)
+		printf("Num. de Orden:\tCliente:\tDescripcion de Falla:\tModelo:\t\tFecha:\t\tHora:\n");
+		printf("%04ld\t\t%-10s\t%-20s\t%-10s\t%-10s\t%-10s\n",orden.numeroDeOrden,orden.cliente,orden.descripciondeFalla,orden.modelo,orden.fecha,orden.hora);
+		aux = (struct lista*)malloc(sizeof(struct lista));
+
+		aux->extraccionL.repuesto = orden;
+		printf("Ingrese la cantidad para la orden actual:");
+		scanf("%d",&aux->extraccionL.cantidad);
+
+		printf("\n\n");
+		if(p == NULL) // Si esta vacía..es el primer elemento.
 		{
-			printf("Registro encontrado\n");
-
-			aux = (cola_t *)malloc(sizeof(cola_t));
-
-			aux->rep_fallados = repuestoA;
-
-			if(p == NULL)					//Tratamiento especial al ser el primer elemento.
-				p = u = aux;
-			else
-			{
-				u->lazo =(void *)aux;		//Engancha el último con el recién creado.
-				u = aux;					//Actualiza  el último.
-			}
+			p = u = aux;
 			u->lazo = NULL;
+			//printf("Primer elemento.");
+			//system("pause");
 		}
-		//printf("%04ld\t\t%04ld\t\t%-10s\t%-10s\n",repuestoA.partNumber,repuestoA.serialNumber,repuestoA.descripcion,repuestoA.ubicacion);
-		fread(&repuestoA,sizeof(repuestos_t),1,file_p);
+		else
+		{
+			r=p;
+			while(1)
+			{
+				if(r->extraccionL.repuesto.numeroDeOrden < aux->extraccionL.repuesto.numeroDeOrden)
+				{
+					//printf("\nPrimer lugar.\n");
+					//system("pause");
+					aux->lazo = p; 	//Rutina de la pila.
+					p = aux;
+					break;
+				}
+				while(r->lazo) //Ciclo para elemento interno.
+				{
+					if(r->lazo->extraccionL.repuesto.numeroDeOrden > aux->extraccionL.repuesto.numeroDeOrden)
+						r= r->lazo;
+					else
+						break;
+				}
+				if(r == u)
+				{
+					//printf("\nUltimo lugar.\n"); //Rutina de la cola.
+					//system("pause");
+					u->lazo = aux;
+					u = aux;
+					u->lazo = NULL;
+					break;
+				}
+				//printf("\nOtro lugar.\n");
+				//system("pause");
+				aux->lazo = r->lazo;
+				r->lazo = aux;
+				break;
+			}
+		}
+
+		fread(&orden, sizeof(repuestos_t),1,file_p);
 	}
 	fclose(file_p);
-	printf("Cola creada con exito..\n");
-	system("pause");
 
+	file_p = fopen("A_Deposito.dat","ab");
+
+	//Impresión de la lista:
 	aux = p;
-	printf("PartNumber\tSerialNumber\tDescripcion:\tUbicacion:\n");
+	printf("Num. de Orden:\tCliente:\tDescripcion de Falla:\tModelo:\tCantidad:\tFecha:\t\tHora:\n");
 	while(aux)
 	{
-		printf("%04ld\t\t%04ld\t\t%-10s\t%-10s\n",aux->rep_fallados.partNumber,aux->rep_fallados.serialNumber,aux->rep_fallados.descripcion,aux->rep_fallados.ubicacion);
-		aux = (cola_t *)aux->lazo;
+		printf("%04ld\t\t%-10s\t%-20s\t%-10s\t%02d\t%-10s\t%-10s\n",aux->extraccionL.repuesto.numeroDeOrden,
+			aux->extraccionL.repuesto.cliente,aux->extraccionL.repuesto.descripciondeFalla,aux->extraccionL.repuesto.modelo,
+			aux->extraccionL.cantidad,aux->extraccionL.repuesto.fecha,aux->extraccionL.repuesto.hora);
+
+		extraccion.repuesto = aux->extraccionL.repuesto;
+		extraccion.cantidad = aux->extraccionL.cantidad;
+		fwrite(&extraccion,sizeof(extraccionRepuestos_t),1,file_p);
+
+		aux = aux->lazo;
 	}
-	system("pause");
+	printf("Archivo para deposito creado con exito...");
+	fclose(file_p);
 
 	return 0;
 }
