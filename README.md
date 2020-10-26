@@ -59,26 +59,6 @@ Utilizando el archivo “potencia.dat” creado en el Ejercicio 39, realizar una
 <p align ="justify">
 La función ubicará el registro correspondiente al id pasado como parámetro, y utilizando punteros imprimirá la primera palabra del campo "desc" en forma inversa, además cambiará el estado del bit 3 para luego actualizar el archivo. Además, se agregará a una pila la potencia cuando los bits 0 y 2, del campo estado, estén encendidos, en caso contrario se agregará el registro al archivo “salida.dat” de organización secuencial.</p>
 
-__EJERCICIO 37__:
-
-   Existe un archivo llamado "datos.dat", de tipo binario, cuya organización es secuencial. Los datos están organizados según la siguiente estructura:   
-
-   ```c
-   struct d{                                                                                            
-   long clave; //Clave o Id del registro
-
-   char d[30]; // Descripcion                                                                                          
-   unsigned char tipo; //Tipo de datos como entero sin signo                                                                                                                                            
-   char b; //'A':Alta 'B':Baja                                                                                                                                                                          
-   }
-   ```
-<p align ="justify">
-   Se Pide:
-   Realizar una función que pase como parámetro la clave, entre otros parámetros, y apile dos valores, la Clave y su posición física respecto
-   al archivo (registro 1, 2, etc), si es que el campo tipo tiene el bit 4 con valor 1. En caso de no encontrarlo mostrar por pantalla "Registro no encontrado".
-   La función debe devolver el puntero de pila.
-   Realizar el main con varias llamadas a dicha función y proceder a mostrar las descripciones del archivo, mediante la pila como acceso directo. NO USAR VARIABLES GLOBALES</p>
-
 __EJERCICIO 41:__
 <p align ="justify">
 El depósito de la empresa CosmeFulanito necesita cargar su stock de repuestos en forma ordenada. Para dicha tarea se solicitó categorizar a los respuestos bajo la siguiente estructura de datos:</p>
