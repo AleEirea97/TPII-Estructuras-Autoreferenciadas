@@ -4,12 +4,19 @@
 #include <windows.h>
 
 typedef struct{
-	char apellido[15];
- 	char nombre[15];
+	char nombre_apellido[30];
  	int edad;
  	long tel;
  	char mail[30];
 }datos_t;
+
+typedef struct{
+	int id;
+	char nombre_apellido[30];
+ 	int edad;
+ 	long tel;
+ 	char mail[30];
+}datosA_t;
 
 struct lista{
 	datos_t info;
@@ -32,11 +39,28 @@ int opc(void){
 	return op;
 }
 
+void genA(datosA_t infoA){
+	FILE *file_p;
+	file_p = fopen("contactos_ordenados.dat","ab");
+
+	infoA.id = 1;
+	strcpy(infoA.nombre_apellido," ");
+	infoA.edad = 0;
+	infoA.tel = 0;
+	strcpy(infoA.mail," ");
+
+	fwrite(&infoA,sizeof(datosA_t),1,file_p);
+	fclose(file_p);
+}
+
 int main (void){
 
 	FILE *file_p;
 	struct lista *p=NULL, *u= NULL, *aux, *r;
 	datos_t a;
+
+	datosA_t infoA;
+	//genA(infoA);
 
 	while(1)
 	{
@@ -47,8 +71,8 @@ int main (void){
 			case 1:
 
 				file_p = fopen("contactos.dat","rb");
-
 				fread(&a,sizeof(datos_t),1,file_p);
+
 				while(!feof(file_p))
 				{
 				 	aux = (struct lista*)malloc(sizeof(struct lista));
@@ -59,45 +83,36 @@ int main (void){
 					{
 						p = u = aux;
 						u->lazo = NULL;
-						printf("Primer elemento.");
-						Sleep(1000);
+						//printf("Primer elemento.");
 					}
 					else
 					{
 						r=p;
 						while(1)
 						{
-							if( strcmp(aux->info.apellido,r->info.apellido) == -1 )
+							if( strcmp( aux->info.nombre_apellido, r->info.nombre_apellido ) == -1 )
 							{
-								printf("%s",aux->info.apellido );
-								printf("\nPrimer lugar.\n");
-								Sleep(1000);
+								//printf("\nPrimer lugar.\n");
 								aux->lazo = p;	//Rutina de la pila.
 								p = aux;
 								break;
 							}
 							while(r->lazo)		//Ciclo para elemento interno.
 							{
-								if( strcmp( r->lazo->info.apellido, aux->info.apellido) == -1 )	{
-
-									printf("%s",aux->info.apellido );
-									r = r->lazo;}
+								if( strcmp( r->lazo->info.nombre_apellido, aux->info.nombre_apellido ) == -1 )
+									r = r->lazo;
 								else
 									break;
 							}
 							if(r == u)
 							{
-								printf("%s",aux->info.apellido );
-								printf("\nUltimo lugar.\n");	//Rutina de la cola.
-								Sleep(1000);
+								//printf("\nUltimo lugar.\n");	//Rutina de la cola.
 								u->lazo = aux;
 								u=aux;
 								u->lazo= NULL;
 								break;
 							}
-							printf("%s",aux->info.apellido );
-							printf("\nOtro lugar.\n");
-							Sleep(1000);
+							//printf("\nOtro lugar.\n");
 							aux->lazo = r->lazo;
 							r->lazo = aux;
 							break;
@@ -107,18 +122,48 @@ int main (void){
 					fread(&a,sizeof(datos_t),1,file_p);
  				}
 				fclose(file_p);
+				printf("Lista creada con exito..\n");
+				system("pause");
+			break;
+
+			case 2:
+				file_p = fopen("potencia.dat","rb+");
+
+				aux = p;
+				while(aux)
+				{
+					printf("\nNombre y Apellido:%s", aux->info.nombre_apellido);
+					printf("\nEdad:%d", aux->info.edad);
+					printf("\nTelefono:%ld",aux->info.tel);
+					printf("\nE - Mail:%s",aux->info.mail);
+
+					fseek(file_p, (-1L)*sizeof(datosA_t), 2);
+					fread(&infoA,sizeof(datosA_t),1,file_p);
+
+					infoA.id++;
+					fseek(file_p, 0L, 2);
+
+					strcpy(infoA.nombre_apellido,aux->info.nombre_apellido);
+					infoA.edad = aux->info.edad;
+					infoA.tel = aux->info.tel;
+					strcpy(infoA.mail,aux->info.mail);
+
+					fwrite(&infoA,sizeof(datosA_t),1,file_p);
+
+					aux = aux->lazo;
+				}
+				fclose(file_p);
+				system("pause");
+
 			break;
 
 			case 3:	//Mostrar Lista.
 
 				aux = p;
+				printf("Nombre y Apellido:\tEdad:\tTelefono:\tE-mail:\n");
 				while(aux)
 				{
-					printf("\nApellido: %s",aux->info.apellido);
-					printf("\nNombre: %s", aux->info.nombre);
-					printf("\nEdad: %d", aux->info.edad);
-					printf("\nTelefono: %ld", aux->info.tel);
-					printf("\nE-Mail: %s", aux->info.mail);
+					printf("\n%-10s\t\t%d\t%ld\t%-10s\n",aux->info.nombre_apellido, aux->info.edad, aux->info.tel, aux->info.mail);
 
 					aux = aux->lazo;
 				}
